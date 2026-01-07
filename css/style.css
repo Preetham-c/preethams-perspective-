@@ -45,19 +45,23 @@ html {
 
 /* HERO */
 .hero {
-  min-height: 65vh;
+  min-height: 75vh;
+  padding: 160px 80px;
   display: flex;
-  align-items: center;
-  padding: 0 80px;
+  flex-direction: column;
+  justify-content: center;
 
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(59,130,246,0.25), transparent 40%),
-    linear-gradient(rgba(10,20,40,0.85), rgba(10,20,40,0.85)),
+  background-image: 
+    linear-gradient(
+      rgba(10, 20, 40, 0.85),
+      rgba(10, 20, 40, 0.85)
+    ),
     url("../images/hero-bg.jpg");
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
 }
 
 .hero-content h1 {
@@ -370,4 +374,5 @@ body {
   max-width: 760px;
   margin: 60px auto;
   padding: 20px;
+
 }

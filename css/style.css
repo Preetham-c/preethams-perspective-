@@ -173,13 +173,22 @@ html {
 }
 
 /* MOBILE */
+/* MOBILE */
 @media (max-width: 768px) {
+
   .hero {
-    padding: 60px 20px;
+    min-height: 60vh;
+    padding: 80px 20px;
+    background-position: top center;
   }
 
   .hero-content h1 {
-    font-size: 34px;
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 15px;
   }
 
   .blog-section {
@@ -376,3 +385,4 @@ body {
   padding: 20px;
 
 }
+

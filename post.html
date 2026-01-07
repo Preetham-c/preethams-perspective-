@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- SEO -->
+  <meta name="description" content="Why every MBA student should learn analytics to succeed in modern business careers.">
+  <meta name="keywords" content="Why Learn Analytics, MBA Analytics, Business Analytics Career">
+  <meta name="author" content="Preetham">
+
+  <!-- Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Why Every MBA Should Learn Analytics | Preetham Perspective</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <h2 class="logo">Preetham</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="blogs.html">Blogs</a>
+    </div>
+  </nav>
+
+  <!-- BLOG POST -->
+  <article class="post-container">
+    <h1 class="post-title">Why Every MBA Should Learn Analytics</h1>
+    <p class="post-meta">By Preetham • 5 min read</p>
+
+    <p>
+      In today’s data-driven world, intuition alone is no longer enough.
+      Businesses demand decisions backed by data, patterns, and insights.
+    </p>
+
+    <p>
+      Business Analytics empowers MBA graduates to move beyond gut feeling
+      and into evidence-based decision-making.
+    </p>
+
+    <h2>Why Analytics Matters</h2>
+
+    <p>
+      From marketing to HR, finance to operations, analytics plays a critical
+      role in improving efficiency, forecasting outcomes, and gaining
+      competitive advantage.
+    </p>
+
+    <p>
+      An MBA who understands analytics is no longer just a manager —
+      they become a strategic thinker.
+    </p>
+
+    <h2>Final Thoughts</h2>
+
+    <p>
+      Analytics is not about coding; it’s about thinking.
+      And that’s exactly what modern MBAs must master.
+    </p>
+  </article>
+<!-- COMMENTS SECTION -->
+<section class="comments">
+  <h2>Comments</h2>
+
+  <form id="commentForm">
+    <input type="text" id="name" placeholder="Your name" required>
+    <textarea id="comment" placeholder="Write your comment..." required></textarea>
+    <button type="submit">Post Comment</button>
+  </form>
+
+  <div id="commentList"></div>
+</section>
+
+<script src="js/comments.js"></script>
+
+<script>
+  const form = document.getElementById("commentForm");
+  const commentsList = document.getElementById("commentsList");
+
+  let comments = JSON.parse(localStorage.getItem("comments")) || [];
+
+  function renderComments() {
+    commentsList.innerHTML = "";
+    comments.forEach((c) => {
+      const div = document.createElement("div");
+      div.className = "comment";
+      div.innerHTML = `<strong>${c.name}</strong><p>${c.text}</p>`;
+      commentsList.appendChild(div);
+    });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("username").value;
+    const text = document.getElementById("commentText").value;
+
+    comments.push({ name, text });
+    localStorage.setItem("comments", JSON.stringify(comments));
+
+    form.reset();
+    renderComments();
+  });
+
+  renderComments();
+</script>
+</body>
+</html>
+<article class="post-container">
+  <!-- EVERYTHING inside your blog post goes here -->
+</article>

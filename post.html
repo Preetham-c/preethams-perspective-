@@ -4,16 +4,13 @@
   <meta charset="UTF-8">
 
   <!-- SEO -->
-  <meta name="description" content="Blog article by Preetham">
-  <meta name="keywords" content="Preetham Blog, MBA, Analytics">
+  <meta name="description" content="Detailed blog post on business, analytics, AI, and MBA insights.">
   <meta name="author" content="Preetham">
 
-  <!-- Mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Blog | Preetham Perspective</title>
+  <title>Blog Post | Preetham Perspective</title>
 
-  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -27,32 +24,19 @@
     </div>
   </nav>
 
-  <!-- BLOG CONTENT (Markdown loads here) -->
-  <article class="post-container">
-    <div id="post-content"></div>
-  </article>
+  <!-- POST CONTENT -->
+  <section class="post-section">
+      <img id="post-image" class="post-image" src="" alt="Blog Image" style="width:100%; border-radius:10px;">
 
-  <!-- COMMENTS SECTION -->
-  <section class="comments">
-    <h2>Comments</h2>
+      <h1 id="post-title" class="post-title">Loading...</h1>
 
-    <form id="commentForm">
-      <input type="text" id="username" placeholder="Your name" required>
-      <textarea id="commentText" placeholder="Write your comment..." required></textarea>
-      <button type="submit">Post Comment</button>
-    </form>
-
-    <div id="commentList"></div>
+      <div id="post-content" class="post-content">
+        Please wait...
+      </div>
   </section>
 
-  <!-- Markdown Parser -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-  <!-- Blog Loader -->
-  <script src="js/post.js"></script>
-
-  <!-- Comments -->
-  <script src="js/comments.js"></script>
+  <script type="module" src="Js/firebase-init.js"></script>
+  <script type="module" src="Js/post.js"></script>
 
 </body>
 </html>

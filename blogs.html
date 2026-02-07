@@ -31,19 +31,16 @@
   <section class="blog-section">
     <h1 class="section-title">Articles</h1>
 
-    <div class="blog-grid">
-
-      <!-- ONLY ONE BLOG -->
-      <a href="post.html?post=why-mba-analytics" class="card-link">
-        <div class="blog-card">
-          <span class="tag">Analytics</span>
-          <h3>Why Every MBA Should Learn Analytics</h3>
-          <p>Analytics is no longer optional. Here’s why it defines modern MBA careers.</p>
-        </div>
-      </a>
-
+    <!-- DYNAMIC BLOG GRID -->
+    <div class="blog-grid" id="blog-list">
+      <p style="color:white;">Loading posts...</p>
     </div>
+
   </section>
+
+  <!-- Firebase + Blog Loader -->
+  <script type="module" src="Js/firebase-init.js"></script>
+  <script type="module" src="Js/blog.js"></script>
 
 </body>
 </html>

@@ -1,96 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Preetham's Perspective</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Preetham's Perspective</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #111;
-            color: white;
-            padding: 20px;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #111;
+        color: white;
+        padding: 20px;
+    }
 
-        .container {
-            max-width: 750px;
-            margin: auto;
-            background: #222;
-            padding: 20px;
-            border-radius: 10px;
-        }
+    .container {
+        max-width: 850px;
+        margin: auto;
+        background: #222;
+        padding: 20px;
+        border-radius: 10px;
+    }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-        }
+    input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: none;
+    }
 
-        #editor {
-            background: white;
-            color: black;
-            padding: 15px;
-            height: 250px;
-            border-radius: 5px;
-            overflow-y: auto;
-        }
+    #editor {
+        background: white;
+        color: black;
+        padding: 15px;
+        height: 300px;
+        border-radius: 5px;
+        overflow-y: auto;
+    }
 
-        .toolbar button {
-            padding: 8px 12px;
-            margin-right: 5px;
-            background: #444;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .toolbar button, .toolbar select {
+        padding: 8px;
+        background: #444;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
 
-        .toolbar button:hover {
-            background: #666;
-        }
+    .toolbar button:hover {
+        background: #666;
+    }
 
-        button.publishBtn {
-            width: 100%;
-            background: #FF5722;
-            border: none;
-            color: white;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 6px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-    </style>
+    button.publishBtn {
+        width: 100%;
+        background: #FF5722;
+        border: none;
+        color: white;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 6px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+</style>
 </head>
 
 <body>
 
 <div class="container">
-    <h2>Admin Dashboard – Add New Blog Post</h2>
+
+    <h2>Admin Dashboard — Add New Blog Post</h2>
 
     <label>Title</label>
     <input type="text" id="title">
 
+    <label>Meta Description</label>
+    <input type="text" id="metaDesc">
+
+    <label>Keywords (comma separated)</label>
+    <input type="text" id="keywords">
+
     <!-- TOOLBAR -->
     <div class="toolbar">
-        <button onclick="formatText('bold')"><b>B</b></button>
-        <button onclick="formatText('italic')"><i>I</i></button>
-        <button onclick="formatText('underline')"><u>U</u></button>
-        <button onclick="formatText('insertUnorderedList')">• List</button>
-        <button onclick="formatText('insertOrderedList')">1. List</button>
-        <button onclick="formatText('formatBlock','H2')">H2</button>
-        <button onclick="formatText('formatBlock','H3')">H3</button>
-        <button onclick="addLink()">🔗 Link</button>
+        <button onclick="format('bold')">B</button>
+        <button onclick="format('italic')">I</button>
+        <button onclick="format('underline')">U</button>
+
+        <button onclick="format('insertUnorderedList')">• List</button>
+        <button onclick="format('insertOrderedList')">1. List</button>
+
+        <select onchange="format('formatBlock', this.value)">
+            <option value="">Heading</option>
+            <option value="H2">H2</option>
+            <option value="H3">H3</option>
+            <option value="H4">H4</option>
+        </select>
+
+        <button onclick="format('justifyLeft')">⬅</button>
+        <button onclick="format('justifyCenter')">⬆</button>
+        <button onclick="format('justifyRight')">➡</button>
+        <button onclick="format('justifyFull')">☰</button>
+
+        <input type="color" onchange="format('foreColor', this.value)">
+        <input type="color" onchange="format('hiliteColor', this.value)">
+
+        <select onchange="format('fontName', this.value)">
+            <option value="">Font</option>
+            <option value="Arial">Arial</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Times New Roman">Times New Roman</option>
+        </select>
+
+        <button onclick="document.execCommand('undo')">↶ Undo</button>
+        <button onclick="document.execCommand('redo')">↷ Redo</button>
+
+        <button onclick="insertImage()">🖼 Insert Image</button>
     </div>
 
-    <!-- RICH TEXT EDITOR -->
     <div id="editor" contenteditable="true"></div>
 
-    <label>Upload Image (Main Image)</label>
-    <input type="file" id="image">
+    <label>Main Blog Image</label>
+    <input type="file" id="mainImage">
 
     <button class="publishBtn" onclick="publishPost()">Publish Post</button>
 
@@ -99,17 +131,11 @@
 
 <script type="module" src="Js/firebase-init.js"></script>
 <script type="module" src="Js/admin.js"></script>
-<script>
-    function formatText(command, value = null) {
-        document.execCommand(command, false, value);
-    }
 
-    function addLink() {
-        const url = prompt("Enter URL:");
-        if (url) {
-            document.execCommand("createLink", false, url);
-        }
-    }
+<script>
+function format(cmd, val = null) {
+    document.execCommand(cmd, false, val);
+}
 </script>
 
 </body>

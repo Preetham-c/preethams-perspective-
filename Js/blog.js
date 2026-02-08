@@ -13,6 +13,7 @@ async function loadBlogs() {
         collection(db, "blogPosts"),
         orderBy("createdAt", "desc")
     );
+
     const snapshot = await getDocs(q);
 
     blogContainer.innerHTML = "";
@@ -24,11 +25,7 @@ async function loadBlogs() {
 
     snapshot.forEach((doc) => {
         const data = doc.data();
-        const id = doc.id;           // IMPORTANT: use firebase ID
-
-        // Clean preview text
-        const preview = data.metaDesc 
-            || data.content.replace(/<[^>]+>/g, '').substring(0, 150);
+        const id = doc.id;   // IMPORTANT — USE FIREBASE DOC ID
 
         blogContainer.innerHTML += `
             <div class="blog-card">
@@ -36,10 +33,10 @@ async function loadBlogs() {
 
                 <h3>${data.title}</h3>
 
-                <p>${preview}...</p>
+                <p>${data.metaDesc || data.content.substring(0, 150)}...</p>
 
-                <!-- CORRECT LINK FORMAT -->
-                <a href="./post.html?id=${id}" class="read-more">Read More →</a>
+                <!-- FIXED READ MORE LINK -->
+                <a href="post.html?id=${id}" class="read-more">Read More →</a>
             </div>
         `;
     });

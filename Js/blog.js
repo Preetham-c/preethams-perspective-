@@ -24,9 +24,11 @@ async function loadBlogs() {
 
     snapshot.forEach((doc) => {
         const data = doc.data();
+        const id = doc.id;           // IMPORTANT: use firebase ID
 
-        // GENERATE CLEAN URL SLUG
-        const slug = data.slug || "";
+        // Clean preview text
+        const preview = data.metaDesc 
+            || data.content.replace(/<[^>]+>/g, '').substring(0, 150);
 
         blogContainer.innerHTML += `
             <div class="blog-card">
@@ -34,9 +36,10 @@ async function loadBlogs() {
 
                 <h3>${data.title}</h3>
 
-                <p>${data.metaDesc || data.content.substring(0, 150)}...</p>
+                <p>${preview}...</p>
 
-                <a href="post/${slug}" class="read-more">Read More →</a>
+                <!-- CORRECT LINK FORMAT -->
+                <a href="./post.html?id=${id}" class="read-more">Read More →</a>
             </div>
         `;
     });

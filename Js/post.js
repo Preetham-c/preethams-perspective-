@@ -1,37 +1,31 @@
 import { db } from "./firebase-init.js";
-import { collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-async function loadPosts() {
-    const container = document.getElementById("manage-list");
-    const snapshot = await getDocs(collection(db, "blogPosts"));
+async function loadPost() {
+    const slug = window.location.pathname.split("/").filter(Boolean).pop(); 
 
-    container.innerHTML = "";
+    if (!slug) {
+        document.getElementById("post-title").innerText = "Post Not Found";
+        return;
+    }
 
-    snapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const id = docSnap.id;
+    const q = query(collection(db, "blogPosts"), where("slug", "==", slug));
+    const snapshot = await getDocs(q);
 
-        container.innerHTML += `
-            <div class="post-card">
-                <h3>${data.title}</h3>
-                
-                <button onclick="editPost('${id}')">✏ Edit</button>
-                <button onclick="deletePost('${id}')">🗑 Delete</button>
-            </div>
-        `;
-    });
+    if (snapshot.empty) {
+        document.getElementById("post-title").innerText = "Post Not Found";
+        return;
+    }
+
+    const data = snapshot.docs[0].data();
+
+    document.getElementById("post-title").innerText = data.title;
+    document.getElementById("post-content").innerHTML = data.content;
+    document.getElementById("post-image").src = data.image || "../images/default.jpg";
+
+    // Update SEO
+    document.title = data.title + " | Preetham Perspective";
+    document.querySelector("meta[name='description']").setAttribute("content", data.metaDesc || data.title);
 }
 
-window.deletePost = async function(id) {
-    if (confirm("Are you sure you want to delete this post?")) {
-        await deleteDoc(doc(db, "blogPosts", id));
-        alert("Deleted!");
-        loadPosts();
-    }
-};
-
-window.editPost = function(id) {
-    window.location.href = `admin.html?edit=${id}`;
-};
-
-loadPosts();
+loadPost();

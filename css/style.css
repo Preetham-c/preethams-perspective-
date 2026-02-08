@@ -385,4 +385,22 @@ body {
   padding: 20px;
 
 }
+/* Fix toolbar width issues */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+}
+
+/* Toolbar buttons & dropdowns auto width */
+.toolbar select,
+.toolbar button,
+.toolbar input[type="color"] {
+    width: auto;
+    display: inline-block;
+    margin-right: 5px;
+}
+
 

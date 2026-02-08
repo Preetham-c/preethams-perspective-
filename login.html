@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            padding: 30px;
+        }
+        .box {
+            max-width: 400px;
+            margin: auto;
+            background: #222;
+            padding: 25px;
+            border-radius: 12px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff5722;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Admin Login</h2>
+
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="status"></p>
+</div>
+
+<script type="module" src="Js/firebase-init.js"></script>
+<script type="module" src="Js/login.js"></script>
+
+</body>
+</html>

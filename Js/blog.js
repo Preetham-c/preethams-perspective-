@@ -1,30 +1,44 @@
 import { db } from "./firebase-init.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+    collection,
+    query,
+    orderBy,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-async function loadPost() {
-    const params = new URLSearchParams(window.location.search);
-    const postId = params.get("id");  // Read the ID from URL
+async function loadBlogs() {
+    const blogContainer = document.getElementById("blog-list");
 
-    if (!postId) {
-        document.getElementById("post-container").innerHTML = "<h2>Post not found.</h2>";
+    const q = query(
+        collection(db, "blogPosts"),
+        orderBy("createdAt", "desc")
+    );
+    const snapshot = await getDocs(q);
+
+    blogContainer.innerHTML = "";
+
+    if (snapshot.empty) {
+        blogContainer.innerHTML = "<p>No articles available yet.</p>";
         return;
     }
 
-    // Fetch post using the ID
-    const docRef = doc(db, "blogPosts", postId);
-    const docSnap = await getDoc(docRef);
+    snapshot.forEach((doc) => {
+        const data = doc.data();
+        const id = doc.id;   // Firebase document ID
 
-    if (!docSnap.exists()) {
-        document.getElementById("post-container").innerHTML = "<h2>Post not found.</h2>";
-        return;
-    }
+        blogContainer.innerHTML += `
+            <div class="blog-card">
+                <img src="${data.image || 'images/default.jpg'}" class="blog-thumb">
 
-    const data = docSnap.data();
+                <h3>${data.title}</h3>
 
-    // Fill page content
-    document.getElementById("post-title").textContent = data.title;
-    document.getElementById("post-image").src = data.image || "images/default.jpg";
-    document.getElementById("post-content").innerHTML = data.content;
+                <p>${data.metaDesc || data.content.substring(0, 150)}...</p>
+
+                <!-- READ MORE USING FIREBASE DOC ID -->
+                <a href="post.html?id=${id}" class="read-more">Read More →</a>
+            </div>
+        `;
+    });
 }
 
-loadPost();
+loadBlogs();

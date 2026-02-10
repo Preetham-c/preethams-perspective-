@@ -4,12 +4,12 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebas
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// Your Firebase configuration
+// Your Firebase configuration (FIXED)
 export const firebaseConfig = {
   apiKey: "AIzaSyD8D1OtVKfdI5BGQecXwD8ngDgtJksnRYY",
   authDomain: "preetham-perspective.firebaseapp.com",
   projectId: "preetham-perspective",
-  storageBucket: "preetham-perspective.firebasestorage.app",
+  storageBucket: "preetham-perspective.appspot.com",   // ✅ FIXED
   messagingSenderId: "392987040131",
   appId: "1:392987040131:web:ee46fa1ffc14ff72a33eb6"
 };
